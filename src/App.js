@@ -50,9 +50,17 @@ function App() {
 
 			const headers = Object.keys(flattenedLocations[0])
 			setHeaders(headers)
-			const filteredLocations = flattenedLocations.filter((loc) =>
-				headers.some((header) => loc[header].toString().search(filter) > -1)
-			)
+			const filteredLocations =
+				filter === ""
+					? flattenedLocations
+					: flattenedLocations.filter((loc) =>
+							headers.some(
+								(header) =>
+									("" + loc[header])
+										.toLowerCase()
+										.search(new RegExp(filter, "i")) > -1
+							)
+					  )
 			if (sort.direction !== "none") {
 				sortLocations(filteredLocations, sort)
 			}
